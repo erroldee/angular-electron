@@ -1,0 +1,18 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/client",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "es6",
+            "dom"
+        ]
+    },
+    "includes": [
+      "**/*.ts"
+    ]
+}

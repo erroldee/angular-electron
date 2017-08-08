@@ -36,7 +36,7 @@ export class MainWindowModule {
 
     loadEvents() {
         this.mainWindow.addListener("closed", () => {
-            CONSTANTS.app.quit();
+            CONSTANTS.windowList[CONSTANTS.windowMapping["main"]] = null;
         });
     }
 
@@ -82,6 +82,10 @@ export class MainWindowModule {
 
         this.mainMenu = new MenuObject(this.menu);
         this.mainWindow.setMenu(this.mainMenu.obj);
+    }
+
+    sendContent(channel: string, data: any) {
+        this.mainWindow.obj.webContents.send(channel, data);
     }
 
     closeWindow() {
