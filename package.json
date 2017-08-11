@@ -1,13 +1,14 @@
 {
   "name": "angular-electron-workspace",
-  "version": "1.0.0",
+  "version": "1.2.6",
   "description": "Angular 2 implementation of Electron using Angular CLI for development and building",
+  "homepage": "https://github.com/erroldee/angular-electron",
   "main": "app.js",
   "scripts": {
     "start": "npm run angular:standalone",
     "angular:standalone": "ng serve --aot=true --progress=false --proxy-config proxy.conf.json",
-    "angular:build": "ng build --prod --sm=false --aot=true --output-path=./dist/client",
-    "electron:run": "electron ./dist/app.js",
+    "angular:build": "ng build --prod --sm=false --aot=true --output-path=./client",
+    "electron:run": "electron app.js",
     "electron:build": "tsc -p .",
     "electron:local": "npm run electron:build && npm run electron:run",
     "electron:prod": "set NODE_ENV=production&& npm run angular:build && npm run electron:build && npm run electron:run",
@@ -18,8 +19,9 @@
     "local:linux": "set NODE_ENV=production&& npm run angular:build && npm run local:prod && node package.js --asar --platform=linux --arch=x64",
     "local:windows": "set NODE_ENV=production&& npm run angular:build && npm run local:prod && node package.js --asar --platform=win32 --arch=ia32",
     "local:mac": "set NODE_ENV=production&& npm run angular:build && npm run local:prod && node package.js --asar --platform=darwin --arch=x64",
-    "local:prod": "cross-env NODE_ENV=production npm run electron:build && copyfiles package.json dist && cd dist && npm install && cd ..",
-    "remote:release": "node_modules/.bin/build --win -p always"
+    "local:prod": "cross-env NODE_ENV=production npm run electron:build",
+    "remote:release": "set GH_TOKEN=changeThisToGithubToken && npm run remote:build",
+    "remote:build": "node_modules/.bin/build --win -p always"
   },
   "author": {
     "name": "Errol Edric Dee",
@@ -89,6 +91,12 @@
         "owner": "erroldee",
         "repo": "angular-electron"
       }
-    ]
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
   }
 }

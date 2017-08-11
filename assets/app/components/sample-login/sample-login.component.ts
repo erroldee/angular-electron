@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {DataStore} from "../../shared/data/data-store.helper";
 const { ipcRenderer } = electron;
@@ -13,7 +13,8 @@ export class SampleLoginComponent implements OnInit {
 
     constructor(
         private _dataStore: DataStore,
-        private _router: Router
+        private _router: Router,
+        private _changeDetector: ChangeDetectorRef
     ) {
         if (this._dataStore.getToken()) {
             this.redirectToDashboard();
@@ -23,7 +24,7 @@ export class SampleLoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        ipcRenderer.send("updater:start", "test");
+        //ipcRenderer.send("updater:start", "test");
     }
 
     startElectronListener() {
@@ -31,12 +32,13 @@ export class SampleLoginComponent implements OnInit {
     }
 
     trigger() {
-        ipcRenderer.send("trigger:test", "test");
+        ipcRenderer.send("updater:start", "test");
     }
 
     display(event, data) {
         console.log(data);
         this.testVar = data;
+        this._changeDetector.detectChanges();
     }
 
     login() {

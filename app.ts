@@ -43,9 +43,6 @@ class ElectronApp {
 
         autoUpdater.on('update-downloaded', (info) => {
             this.sendStatusToWindow('Update downloaded; will install in 5 seconds');
-        });
-
-        autoUpdater.on('update-downloaded', (info) => {
             // Wait 5 seconds, then quit and install
             // In your application, you don't need to wait 5 seconds.
             // You could call autoUpdater.quitAndInstall(); immediately
@@ -72,12 +69,17 @@ class ElectronApp {
         });
 
         ipcMain.on("updater:start", () => {
-            autoUpdater.checkForUpdates();
+            try {
+                autoUpdater.checkForUpdates();
+            } catch (e) {
+                console.log("Cannot run updater on local machine.");
+            }
+
         });
 
         ipcMain.on("trigger:test", () => {
             console.log("triggered");
-            CONSTANTS.windowList[CONSTANTS.windowMapping["main"]].sendContent("updater:status", "test");
+            this.sendStatusToWindow("testerz");
         });
     }
 
